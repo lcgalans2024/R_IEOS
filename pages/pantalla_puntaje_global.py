@@ -77,4 +77,5 @@ def puntaje_global(datos1, datos2):
         datos_top_10 = datos_top_10[["Grupo","Nombre alumno","Puntaje global"]].reset_index(drop=True)
         datos_top_10["Grupo"] = datos_top_10["Grupo"].astype(str)
         # Crear gráfico de barras para los top 10
-        st.dataframe(datos_top_10, use_container_width=True)
+        
+        st.dataframe(datos_top_10.reset_index(drop=True), use_container_width=True, hide_index=True)
