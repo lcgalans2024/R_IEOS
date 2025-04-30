@@ -3,3 +3,4 @@ venv_scraping_streamlit/
 venv
 pages/__pycache__/
 __pycache__/
+__pycache__
