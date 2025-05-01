@@ -9,7 +9,7 @@ st.title("ANÁLISIS RESULTADOS INSTITUCIONALES")
 st.subheader("⚠️ Este es un espacio en construcción ⚠️")
 
 # Configurar sidebar y cargar datos
-df, df_filtrado = sidebar.sidebar_config()
+sidebar.sidebar_config()
 
 # Tabs principales del Dashboard
 tabs = [
@@ -17,7 +17,7 @@ tabs = [
     "Análisis Por Area",
     "Análisis Por Grupo",
     "Análisis Por Año",
-    "Olimpiadas Institucionales"
+    "Olimpiadas Institucionales",
 ]
 
 # Crear Tabs
@@ -26,7 +26,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(tabs)
 # Lógica de cada pantalla
 with tab1:
     try:
-        pantalla_puntaje_global.puntaje_global(df, df_filtrado)
+        pantalla_puntaje_global.puntaje_global()
 
     except Exception as e:
         st.error(f"Error al cargar la pantalla de análisis global: {e}")
@@ -39,7 +39,7 @@ with tab1:
          #   st.experimental_rerun()
 with tab2:
     try:
-        pt_por_area.puntaje_por_area(df, df_filtrado)
+        pt_por_area.puntaje_por_area()
     except Exception as e:
         st.error(f"Error al cargar la pantalla de análisis por área: {e}")
 
@@ -48,7 +48,7 @@ with tab2:
 
 with tab3:
     try:
-        pt_por_grupo.puntaje_por_grupo(df, df_filtrado)
+        pt_por_grupo.puntaje_por_grupo()
     except Exception as e:
         st.error(f"Error al cargar la pantalla de análisis por grupo: {e}")
 
@@ -56,7 +56,7 @@ with tab3:
         st.error("No se pudo cargar el análisis por grupo. Por favor, verifica los datos o intenta más tarde.")
 with tab4:
     try:
-        pt_por_año.puntaje_por_año(df, df_filtrado)
+        pt_por_año.puntaje_por_año()
     except Exception as e:
         st.error(f"Error al cargar la pantalla de análisis por año: {e}")
 
@@ -64,7 +64,7 @@ with tab4:
         st.error("No se pudo cargar el análisis por año. Por favor, verifica los datos o intenta más tarde.")
 with tab5:
     try:
-        pantalla_olimpiadas.puntaje_olimpiadas(df, df_filtrado)
+        pantalla_olimpiadas.puntaje_olimpiadas()
     except Exception as e:
         st.error(f"Error al cargar la pantalla de análisis de olimpiadas: {e}")
 

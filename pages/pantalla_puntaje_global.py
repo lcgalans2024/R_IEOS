@@ -4,21 +4,21 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from streamlit_extras.metric_cards import style_metric_cards
 
-def puntaje_global(datos1, datos2):
+def puntaje_global():
     st.header("Análisis Puntaje Global 📈")
 
     # Validar si '1, datos2):' tiene registros
-    if datos1.empty:
-        st.warning("No hay datos disponibles para mostrar.")
-        return
+    #if datos1.empty:
+    #    st.warning("No hay datos disponibles para mostrar.")
+    #    return
     
-    if datos2.empty:
-        st.warning("No hay datos disponibles para mostrar.")
-        return
+    #if datos2.empty:
+    #    st.warning("No hay datos disponibles para mostrar.")
+    #    return
 
     # Mostrar gráfico de barras de distribución de puntajes por grupo
     # Agrupar datos por grupo y calcular promedios de puntajes globales
-    datos_agrupados = datos2.groupby(['Grupo','SIMULACRO','AÑO'])['Puntaje global'].mean().round(2).reset_index()
+    datos_agrupados = st.session_state["datos_filtrados"].groupby(['Grupo','SIMULACRO','AÑO'])['Puntaje global'].mean().round(2).reset_index()
     datos_agrupados["Grupo"] = datos_agrupados["Grupo"].astype(str)
     # Validar si hay datos
     if datos_agrupados.empty:
@@ -26,7 +26,13 @@ def puntaje_global(datos1, datos2):
     else:
           # Crear gráfico de barras
 
-          fig = px.bar(datos_agrupados, x="Grupo", y="Puntaje global", color = 'SIMULACRO', barmode='group', text_auto=True)
+          fig = px.bar(datos_agrupados,
+                       x="Grupo",
+                       y="Puntaje global",
+                       color = 'SIMULACRO',
+                       barmode='group',
+                       text_auto=True
+                       )
 
     #     Actualizar el diseño para etiquetas y título
           fig.update_layout(
@@ -45,13 +51,13 @@ def puntaje_global(datos1, datos2):
     columna_prueba = "SIMULACRO"
 
     # Obtener grupos únicos de la columna elegida
-    pruebas_unicos = datos2[columna_prueba].unique()
+    pruebas_unicos = st.session_state["datos_filtrados"][columna_prueba].unique()
 
     # Crear un selector de grupo con st.selectbox
     prueba_seleccionada = st.selectbox("Seleccione un simulacro o ICFES:", pruebas_unicos)
 
     # Filtrar los datos según la prueba seleccionada
-    datos_filtrados = datos2[datos2[columna_prueba] == prueba_seleccionada]
+    datos_filtrados = st.session_state["datos_filtrados"][st.session_state["datos_filtrados"][columna_prueba] == prueba_seleccionada]
 
     # Validar si hay datos filtrados
     if datos_filtrados.empty:

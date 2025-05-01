@@ -61,29 +61,32 @@ def sidebar_config():
         st.session_state.año_seleccionado = None
 
     #Cargamos los datos
-    datos = pd.read_excel("Resultados_Simulacro_ICFES.xlsx")
-    datos = datos.dropna()
+    datos = pd.read_excel("Resultados_Simulacro_ICFES.xlsx").dropna()
 
-    # Convertir la columna 'Grado' a string para evitar problemas de tipo
+    # Convertir la columna 'Grupo' y 'Año' a string para evitar problemas de tipo
     datos["Grupo"] = datos["Grupo"].astype(str)
     datos["AÑO"] = datos["AÑO"].astype(str)
 
     for col in datos.select_dtypes(include=np.float64):
         datos[col] = datos[col].round(2)
 
+    st.session_state["datos"] = datos.copy()
+
     # Selector de grado
     grados = ["11", "10"]
-    grado_seleccionado = st.sidebar.selectbox("Seleccione el grado:", grados)
+    st.session_state["grado_seleccionado"] = st.sidebar.selectbox("Seleccione el grado:", grados)
+    grado_seleccionado = st.session_state["grado_seleccionado"]
 
     # Selector de año
     años = datos["AÑO"].unique().tolist()
-    año_seleccionado = st.sidebar.selectbox("Seleccione el año", años)
+    st.session_state["año_seleccionado"] = st.sidebar.selectbox("Seleccione el año", años, index=0)
+    año_seleccionado = st.session_state["año_seleccionado"]
 
     # Filtrar datos según el grado y año seleccionados
-    datos_filtrados = datos[(datos['Grupo'].str.startswith(grado_seleccionado)) & (datos["AÑO"] == año_seleccionado)]
+    st.session_state["datos_filtrados"] = datos[(datos['Grupo'].str.startswith(grado_seleccionado)) & (datos["AÑO"] == año_seleccionado)]
 
     ################################################# METRICAS EXTERNAS #################################################
 
     # Devolver el dataframe filtrado
-    return datos, datos_filtrados#, datos_filtrados, grado_seleccionado, año_seleccionado#, media_nacional, media_depto, media_munpio, media_colegio
+    #return datos#, datos_filtrados#, datos_filtrados, grado_seleccionado, año_seleccionado#, media_nacional, media_depto, media_munpio, media_colegio
 
