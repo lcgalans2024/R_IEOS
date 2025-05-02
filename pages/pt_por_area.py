@@ -35,7 +35,8 @@ def puntaje_por_area():
         fig.update_layout(
             xaxis_title="Áreas",
             yaxis_title="Puntaje promedio",
-            title="Distribución de puntajes por área",
+            title=f"Distribución de puntajes por área grado {st.session_state.grado_seleccionado}"
+            #,xaxis_tickangle=-45,
         )
 
         # Mostrar el gráfico
