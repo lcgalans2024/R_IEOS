@@ -22,13 +22,20 @@ def puntaje_por_grupo():
     datos_grupo_seleccionado = datos_derretidos[datos_derretidos.Grupo== grupo_seleccionado]
 
     # Crear gráfico de barras por area
-    fig = px.bar(datos_grupo_seleccionado, x="Área", y="Promedio", color = 'SIMULACRO', barmode='group', text_auto=True)
+    fig = px.bar(datos_grupo_seleccionado,
+                 x="Área",
+                 y="Promedio",
+                 color = 'SIMULACRO',
+                 barmode='group',
+                 text_auto=True
+                 )
 
     # Actualizar el diseño para etiquetas y título
     fig.update_layout(
           xaxis_title="Áreas",
           yaxis_title="Promedios",
-          title="Distribución de puntajes por área para cdad grupo grupo",
+          title=f"Distribución de puntajes por área grupo {grupo_seleccionado}"
+          #xaxis_tickangle=-45,
     )
 
     # Mostrar el gráfico
@@ -68,10 +75,6 @@ def puntaje_por_grupo():
     with col3:
         st.metric(label=f"Mínimo Grupo {grupo_seleccionado }", value=f"{minimo:.2f}")
     #style_metric_cards(border_color="#3A74E7")
-    
-    #st.dataframe(datos_grupos, use_container_width=True, hide_index=True)
-    #st.dataframe(datos4, use_container_width=True, hide_index=True)
-    #st.dataframe(st.session_state['datos_filtrados'], use_container_width=True, hide_index=True)
 
     #st.subheader(f"Mejores y perores puntajes en el {simulacro_seleccionado} para el area de {area_seleccionada}")
     st.markdown(
