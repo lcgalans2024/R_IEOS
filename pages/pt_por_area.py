@@ -3,6 +3,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from streamlit_extras.metric_cards import style_metric_cards
+from funciones import asignar_nivel_lc, asignar_nivel_M, asignar_nivel_CN, asignar_nivel_ingles, asignar_nivel_CN as asignar_nivel_SC
 
 def puntaje_por_area():
     st.header("Análisis por Área 🧮")
@@ -22,10 +23,10 @@ def puntaje_por_area():
                                                              "Sociales y ciudadanas",
                                                              "Inglés"
                                                              ]].mean().round(2).reset_index()
-    st.dataframe(df_p.reset_index(drop=True), use_container_width=True, hide_index=True)
+    #st.dataframe(df_p.reset_index(drop=True), use_container_width=True, hide_index=True)
     # deretir datos por columnas de areas
     df_melt = df_p.melt(id_vars=['Grupo'], var_name="Área", value_name="Promedio")
-    st.dataframe(df_melt.reset_index(drop=True), use_container_width=True, hide_index=True)
+    #st.dataframe(df_melt.reset_index(drop=True), use_container_width=True, hide_index=True)
     # Crear gráfico de barras
     fig = px.bar(df_melt,
                  x ="Área",
@@ -162,8 +163,14 @@ def puntaje_por_area():
                 nivel_seleccionado = 'ND_M'
             elif area_seleccionada == "Ciencias naturales":
                 nivel_seleccionado = 'ND_CN'
+            elif area_seleccionada == "Sociales y ciudadanas":
+                nivel_seleccionado = 'ND_SC'
+            elif area_seleccionada == "Inglés":
+                nivel_seleccionado = 'ND_IG'
 
             df_N_simulacro = st.session_state["datos_filtrados"][st.session_state["datos_filtrados"]['SIMULACRO'] == simulacro_seleccionado].copy()
+            df_N_simulacro['ND_SC'] = df_N_simulacro['Sociales y ciudadanas'].apply(asignar_nivel_CN).astype(str)
+            df_N_simulacro['ND_IG'] = df_N_simulacro['Inglés'].apply(asignar_nivel_ingles).astype(str)
             df_N = df_N_simulacro.groupby(['Grupo',nivel_seleccionado])[area_seleccionada].count().reset_index()
             df_N["porcentaje"] = df_N.groupby(['Grupo'])[area_seleccionada].transform(lambda x: x / x.sum() * 100).round(2)
             #st.dataframe(df_N.reset_index(drop=True), use_container_width=True, hide_index=True)
@@ -175,12 +182,17 @@ def puntaje_por_area():
                          color=nivel_seleccionado,
                          barmode='relative',
                          text_auto=True,
-                 category_orders={nivel_seleccionado: ['1', '2', '3', '4']},  # <- Orden definido
+                 category_orders={nivel_seleccionado: ['1', '2', '3', '4','A-','A1','A2','B1','B+']},  # <- Orden definido
                  color_discrete_map={
                         '1': 'red',
                         '2': 'orange',
                         '3': 'yellow',
-                        '4': 'green'
+                        '4': 'green',
+                        'A-': 'red',
+                        'A1': "#ff8383",
+                        'A2': 'orange',
+                        'B1': 'yellow',
+                        'B+': 'green'
                     }
                          )
             # Actualizar el diseño para etiquetas y título

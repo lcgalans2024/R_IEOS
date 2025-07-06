@@ -41,7 +41,7 @@ def asignar_nivel_ingles(puntaje):
         return "A1"
     elif 58.0 <= puntaje < 68.0:
         return "A2"
-    elif 68.0 <= puntaje < 78.0:
+    elif 68.0 <= puntaje < 79.0:
         return "B1"
     elif 79.0 <= puntaje <= 100.0:
         return "B+"
