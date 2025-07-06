@@ -63,9 +63,22 @@ def sidebar_config():
     #Cargamos los datos
     datos = pd.read_excel("Resultados_Simulacro_ICFES.xlsx").dropna()
 
+    # eliminar registo por documento, AÑO y SIMULACRO
+    documentos_a_ignorar = ["1035976977","nn_1001"]
+    datos = datos[~((datos["DOCUMENTO"].isin(documentos_a_ignorar)) & (datos["AÑO"] == 2025) & (datos["SIMULACRO"] == "S1"))]
+
+    #dim = datos.shape
+    #st.sidebar.markdown(f"**Total de registros:** {dim[0]}")
+    #st.dataframe(datos, use_container_width=True)
+
+    
+
     # Convertir la columna 'Grupo' y 'Año' a string para evitar problemas de tipo
     datos["Grupo"] = datos["Grupo"].astype(str)
     datos["AÑO"] = datos["AÑO"].astype(str)
+    datos["ND_LC"] = datos["ND_LC"].astype(str)
+    datos["ND_M"] = datos["ND_M"].astype(str)
+    datos["ND_CN"] = datos["ND_CN"].astype(str)
 
     for col in datos.select_dtypes(include=np.float64):
         datos[col] = datos[col].round(2)
@@ -81,6 +94,11 @@ def sidebar_config():
     años = datos["AÑO"].unique().tolist()
     st.session_state["año_seleccionado"] = st.sidebar.selectbox("Seleccione el año", años, index=0)
     año_seleccionado = st.session_state["año_seleccionado"]
+
+    # -- Select for high sample rate data
+    high_fs = st.sidebar.checkbox('Sin conectar')
+    if high_fs:
+        datos = datos[datos['Grupo'].isin(['1101','1102','1103','1104'])].copy()
 
     # Filtrar datos según el grado y año seleccionados
     st.session_state["datos_filtrados"] = datos[(datos['Grupo'].str.startswith(grado_seleccionado)) & (datos["AÑO"] == año_seleccionado)]

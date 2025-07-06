@@ -27,7 +27,15 @@ def puntaje_por_grupo():
                  y="Promedio",
                  color = 'SIMULACRO',
                  barmode='group',
-                 text_auto=True
+                 text_auto=True,
+                 category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
+                 color_discrete_map={
+                        'S1': '#83c9ff',
+                        'S2': 'red',
+                        'ED1': 'teal',
+                        'S3': 'pink',
+                        'ICFES': "#1466c3"
+                    }
                  )
 
     # Actualizar el diseño para etiquetas y título

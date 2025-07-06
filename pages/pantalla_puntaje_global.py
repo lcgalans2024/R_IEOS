@@ -20,28 +20,66 @@ def puntaje_global():
     # Agrupar datos por grupo y calcular promedios de puntajes globales
     datos_agrupados = st.session_state["datos_filtrados"].groupby(['Grupo','SIMULACRO','AÑO'])['Puntaje global'].mean().round(2).reset_index()
     datos_agrupados["Grupo"] = datos_agrupados["Grupo"].astype(str)
+    #st.dataframe(datos_agrupados.reset_index(drop=True), use_container_width=True, hide_index=True)
+    
     # Validar si hay datos
     if datos_agrupados.empty:
           st.warning("⚠️ No se tienen datos aún para este grado en el año seleccionado.")
     else:
-          # Crear gráfico de barras
-
-          fig = px.bar(datos_agrupados,
-                       x="Grupo",
+          # Crear grafico de barras puntaje global por SIMULACRO
+          fig = px.bar(st.session_state["datos_filtrados"].groupby(['SIMULACRO'])['Puntaje global'].mean().round(2).reset_index(),
+                       x="SIMULACRO",
                        y="Puntaje global",
                        color = 'SIMULACRO',
-                       barmode='group',
-                       text_auto=True
+                       #barmode='group',
+                       text_auto=True,
+                 category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
+                 color_discrete_map={
+                        'S1': '#83c9ff',
+                        'S2': 'red',
+                        'ED1': 'teal',
+                        'S3': 'pink',
+                        'ICFES': "#1466c3"
+                    }
+
                        )
 
-    #     Actualizar el diseño para etiquetas y título
+          #Actualizar el diseño para etiquetas y título
           fig.update_layout(
               xaxis_title="Grupo",
               yaxis_title="Puntaje global",
               title="Distribución de puntajes globales por grupo",
           )
 
-    #     Mostrar el gráfico
+          #Mostrar el gráfico
+          st.plotly_chart(fig)
+
+          # Crear gráfico de barras puntaje global por grupo
+          fig = px.bar(datos_agrupados,
+                       x="Grupo",
+                       y="Puntaje global",
+                       color = 'SIMULACRO',
+                       barmode='group',
+                       text_auto=True,
+                 category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
+                 color_discrete_map={
+                        'S1': '#83c9ff',
+                        'S2': 'red',
+                        'ED1': 'teal',
+                        'S3': 'pink',
+                        'ICFES': "#1466c3"
+                    }
+
+                       )
+
+          #Actualizar el diseño para etiquetas y título
+          fig.update_layout(
+              xaxis_title="Grupo",
+              yaxis_title="Puntaje global",
+              title="Distribución de puntajes globales por grupo",
+          )
+
+          #Mostrar el gráfico
           st.plotly_chart(fig)
 
     # Metricas globales por prueba

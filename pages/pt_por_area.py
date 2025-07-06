@@ -14,6 +14,43 @@ def puntaje_por_area():
     
     # cargar los datos
     df = st.session_state["datos_filtrados"].groupby(['SIMULACRO'])[["Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(2).reset_index()
+    df_p = st.session_state["datos_filtrados"].groupby(['Grupo'
+                                                         #,'SIMULACRO'
+                                                         ])[["Matemáticas",
+                                                             "Lectura crítica",
+                                                             "Ciencias naturales",
+                                                             "Sociales y ciudadanas",
+                                                             "Inglés"
+                                                             ]].mean().round(2).reset_index()
+    st.dataframe(df_p.reset_index(drop=True), use_container_width=True, hide_index=True)
+    # deretir datos por columnas de areas
+    df_melt = df_p.melt(id_vars=['Grupo'], var_name="Área", value_name="Promedio")
+    st.dataframe(df_melt.reset_index(drop=True), use_container_width=True, hide_index=True)
+    # Crear gráfico de barras
+    fig = px.bar(df_melt,
+                 x ="Área",
+                 y="Promedio",
+                 color="Grupo",
+                 barmode= "group",#['stack', 'group', 'overlay', 'relative'],
+                 text_auto=True,
+                 #category_orders={'Grupo': df_p['Grupo'].unique()},  # <- Orden definido
+                 color_discrete_map={
+                        '1': '#83c9ff',
+                        '2': 'red',
+                        '3': 'teal',
+                        '4': 'pink',
+                        '5': "#1466c3"
+                    }
+                 ) 
+    # Actualizar el diseño para etiquetas y título
+    fig.update_layout(
+        xaxis_title="Grupos",
+        yaxis_title="Puntaje promedio",
+        title=f"Comportamiento en las areas por grupo"
+        #,xaxis_tickangle=-45,
+    )
+    # Mostrar el gráfico
+    st.plotly_chart(fig)
 
     # Validar si hay datos
     if df.empty:
@@ -28,14 +65,22 @@ def puntaje_por_area():
                      y="Promedio",
                      color="SIMULACRO",
                      barmode= "group",#['stack', 'group', 'overlay', 'relative'],
-                     text_auto=True
+                     text_auto=True,
+                 category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
+                 color_discrete_map={
+                        'S1': '#83c9ff',
+                        'S2': 'red',
+                        'ED1': 'teal',
+                        'S3': 'pink',
+                        'ICFES': "#1466c3"
+                    }
                      )
         
         # Actualizar el diseño para etiquetas y título
         fig.update_layout(
             xaxis_title="Áreas",
             yaxis_title="Puntaje promedio",
-            title=f"Distribución de puntajes por área grado {st.session_state.grado_seleccionado}"
+            title=f"Distribución de puntajes por área para cada prueba"
             #,xaxis_tickangle=-45,
         )
 
@@ -89,7 +134,15 @@ def puntaje_por_area():
                          y=area_seleccionada,
                          color="SIMULACRO",
                          barmode='group',
-                         text_auto=True
+                         text_auto=True,
+                 category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
+                 color_discrete_map={
+                        'S1': '#83c9ff',
+                        'S2': 'red',
+                        'ED1': 'teal',
+                        'S3': 'pink',
+                        'ICFES': "#1466c3"
+                    }
                          )
 
             # Actualizar el diseño para etiquetas y título
@@ -101,6 +154,46 @@ def puntaje_por_area():
 
             # Mostrar el gráfico
             st.plotly_chart(fig)
+        
+        try:
+            if area_seleccionada == "Lectura crítica":
+                nivel_seleccionado = 'ND_LC'
+            elif area_seleccionada == "Matemáticas":
+                nivel_seleccionado = 'ND_M'
+            elif area_seleccionada == "Ciencias naturales":
+                nivel_seleccionado = 'ND_CN'
+
+            df_N_simulacro = st.session_state["datos_filtrados"][st.session_state["datos_filtrados"]['SIMULACRO'] == simulacro_seleccionado].copy()
+            df_N = df_N_simulacro.groupby(['Grupo',nivel_seleccionado])[area_seleccionada].count().reset_index()
+            df_N["porcentaje"] = df_N.groupby(['Grupo'])[area_seleccionada].transform(lambda x: x / x.sum() * 100).round(2)
+            #st.dataframe(df_N.reset_index(drop=True), use_container_width=True, hide_index=True)
+
+            # Crear gráfico de barras
+            fig = px.bar(df_N,
+                         x="Grupo",
+                         y="porcentaje",
+                         color=nivel_seleccionado,
+                         barmode='relative',
+                         text_auto=True,
+                 category_orders={nivel_seleccionado: ['1', '2', '3', '4']},  # <- Orden definido
+                 color_discrete_map={
+                        '1': 'red',
+                        '2': 'orange',
+                        '3': 'yellow',
+                        '4': 'green'
+                    }
+                         )
+            # Actualizar el diseño para etiquetas y título
+            fig.update_layout(
+                xaxis_title="Grupo",
+                yaxis_title="Porcentaje",
+                title=f"Distribución porcentual nivel de desempeño en {area_seleccionada} por grupo"
+            )
+            # Mostrar el gráfico
+            st.plotly_chart(fig)
+        except:
+            st.warning(f"⚠️ Para el área {area_seleccionada} no se tienen niveles de desempeño definidos.")
+            
 
         #st.subheader(f"Mejores y perores puntajes en el {simulacro_seleccionado} para el area de {area_seleccionada}")
         st.markdown(

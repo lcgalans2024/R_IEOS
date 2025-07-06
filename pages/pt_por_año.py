@@ -15,6 +15,41 @@ def puntaje_por_año():
     # cargar los datos
     df = st.session_state["datos"]
 
+    ###############################################################################################
+    # filtrar datos por grado seleccionado
+    df0 = df[df['Grupo'].str.startswith(st.session_state["grado_seleccionado"])]
+
+    df3 = df0.groupby(['AÑO','SIMULACRO'])[["Puntaje global","Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(2).reset_index().melt(id_vars=["AÑO","SIMULACRO"], var_name="Área", value_name="Promedio")
+    #st.dataframe(df3.reset_index(drop=True), use_container_width=True, hide_index=True)
+    
+    # Crear selector para el área
+    area_seleccionad = st.selectbox("Seleccione un área:", df3["Área"].unique(), key="area_seleccionad")
+    # Realizamos grafico de barras
+    fig = px.bar(df3[df3["Área"] == area_seleccionad],
+                 x="AÑO",
+                 y="Promedio",
+                 color = 'SIMULACRO',
+                 barmode='group',
+                 text_auto=True,
+                 category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
+                 color_discrete_map={
+                        'S1': '#83c9ff',
+                        'S2': 'red',
+                        'ED1': 'teal',
+                        'S3': 'pink',
+                        'ICFES': "#1466c3"
+                    }
+                 
+                 )
+    # Actualizar el diseño para etiquetas y título
+    fig.update_layout(
+        xaxis_title="Área",
+        yaxis_title="Puntaje global",
+        title=f"Comparativo puntaje global por prueba para cada año"
+    )
+    # Mostrar el gráfico
+    st.plotly_chart(fig)
+    
     # filtrar datos por grado once de 2025 y grado decimo de 2024
     df1 = df[((df['AÑO'] == '2025') & (df['Grupo'].str.startswith('110'))) | ((df['AÑO'] == '2024') & (df['Grupo'].str.startswith('100')))]
 

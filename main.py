@@ -77,4 +77,4 @@ with tab6:
     try:
         pt_descarga.descarga()
     except Exception as e:
-        st.error(f"Error al cargar la pantalla de análisis de olimpiadas: {e}")
+        st.error(f"Error al cargar la pantalla para descarga: {e}")
