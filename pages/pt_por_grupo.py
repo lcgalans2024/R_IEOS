@@ -42,7 +42,7 @@ def puntaje_por_grupo():
     fig.update_layout(
           xaxis_title="Áreas",
           yaxis_title="Promedios",
-          title=f"Distribución de puntajes por área grupo {grupo_seleccionado}"
+          title=f"Distribución de puntajes por área del grupo {grupo_seleccionado} en el año {st.session_state['año_seleccionado']}"
           #xaxis_tickangle=-45,
     )
 
@@ -96,7 +96,7 @@ def puntaje_por_grupo():
             text-align:center
             '>
             <span style='font-size:22px; font-weight:600'>
-                Mejores y peores puntajes en el 
+                Mejores y peores puntajes en la prueba 
                 <span style='color:#1f77b4'>{simulacro_seleccionado}</span> 
                 para el área de 
                 <span style='color:#d62728'>{area}</span>

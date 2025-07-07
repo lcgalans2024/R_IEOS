@@ -92,13 +92,14 @@ def sidebar_config():
 
     # Selector de año
     años = datos["AÑO"].unique().tolist()
-    st.session_state["año_seleccionado"] = st.sidebar.selectbox("Seleccione el año", años, index=0)
+    st.session_state["año_seleccionado"] = st.sidebar.selectbox("Seleccione el año", años, index=1)
     año_seleccionado = st.session_state["año_seleccionado"]
 
-    # -- Select for high sample rate data
-    high_fs = st.sidebar.checkbox('Sin conectar')
-    if high_fs:
-        datos = datos[datos['Grupo'].isin(['1101','1102','1103','1104'])].copy()
+    if año_seleccionado != "2025":
+        # -- Select for high sample rate data
+        high_fs = st.sidebar.checkbox('Sin conectar')
+        if high_fs:
+            datos = datos[datos['Grupo'].isin(['1101','1102','1103','1104'])].copy()
 
     # Filtrar datos según el grado y año seleccionados
     st.session_state["datos_filtrados"] = datos[(datos['Grupo'].str.startswith(grado_seleccionado)) & (datos["AÑO"] == año_seleccionado)]

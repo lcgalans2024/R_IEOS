@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
@@ -45,9 +46,9 @@ def puntaje_por_area():
                  ) 
     # Actualizar el diseño para etiquetas y título
     fig.update_layout(
-        xaxis_title="Grupos",
+        xaxis_title="Áreas",
         yaxis_title="Puntaje promedio",
-        title=f"Comportamiento en las areas por grupo"
+        title=f"Comportamiento en las areas pora cada grupo"
         #,xaxis_tickangle=-45,
     )
     # Mostrar el gráfico
@@ -81,7 +82,7 @@ def puntaje_por_area():
         fig.update_layout(
             xaxis_title="Áreas",
             yaxis_title="Puntaje promedio",
-            title=f"Distribución de puntajes por área para cada prueba"
+            title=f"Distribución de puntajes del grado {st.session_state['grado_seleccionado']} por área para cada prueba en el año {st.session_state['año_seleccionado']}",
             #,xaxis_tickangle=-45,
         )
 
@@ -150,7 +151,7 @@ def puntaje_por_area():
             fig.update_layout(
                 xaxis_title="Grupo",
                 yaxis_title="Puntaje promedio",
-                title=f"Distribución de puntaje en {area_seleccionada} por grupo"
+                title=f"Distribución de puntajes en {area_seleccionada} por grupo para cada prueba en el año {st.session_state['año_seleccionado']}",
             )
 
             # Mostrar el gráfico
@@ -174,6 +175,7 @@ def puntaje_por_area():
             df_N = df_N_simulacro.groupby(['Grupo',nivel_seleccionado])[area_seleccionada].count().reset_index()
             df_N["porcentaje"] = df_N.groupby(['Grupo'])[area_seleccionada].transform(lambda x: x / x.sum() * 100).round(2)
             #st.dataframe(df_N.reset_index(drop=True), use_container_width=True, hide_index=True)
+            # mostrar ños tipos de las columnas
 
             # Crear gráfico de barras
             fig = px.bar(df_N,
@@ -199,7 +201,7 @@ def puntaje_por_area():
             fig.update_layout(
                 xaxis_title="Grupo",
                 yaxis_title="Porcentaje",
-                title=f"Distribución porcentual nivel de desempeño en {area_seleccionada} por grupo"
+                title=f"Distribución porcentual niveles de desempeño en {area_seleccionada} por grupo en la prueba {simulacro_seleccionado} del año {st.session_state['año_seleccionado']}",
             )
             # Mostrar el gráfico
             st.plotly_chart(fig)
@@ -219,7 +221,7 @@ def puntaje_por_area():
                 text-align:center
                 '>
                 <span style='font-size:22px; font-weight:600'>
-                    Mejores y peores puntajes en el 
+                    Mejores y peores puntajes en la prueba 
                     <span style='color:#1f77b4'>{simulacro_seleccionado}</span> 
                     para el área de 
                     <span style='color:#d62728'>{area_seleccionada}</span>

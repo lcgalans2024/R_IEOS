@@ -48,7 +48,7 @@ def puntaje_global():
           fig.update_layout(
               xaxis_title="Grupo",
               yaxis_title="Puntaje global",
-              title="Distribución de puntajes globales por grupo",
+              title=f"Promedio de puntajes globales por prueba para el grado {st.session_state['grado_seleccionado']} en el año {st.session_state['año_seleccionado']}",
           )
 
           #Mostrar el gráfico
@@ -76,7 +76,7 @@ def puntaje_global():
           fig.update_layout(
               xaxis_title="Grupo",
               yaxis_title="Puntaje global",
-              title="Distribución de puntajes globales por grupo",
+              title="Distribución de puntajes globales por grupo en las diferentes pruebas",
           )
 
           #Mostrar el gráfico

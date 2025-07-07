@@ -45,7 +45,7 @@ def puntaje_por_año():
     fig.update_layout(
         xaxis_title="Área",
         yaxis_title="Puntaje global",
-        title=f"Comparativo puntaje global por prueba para cada año"
+        title=f"Comparativo puntajes por prueba para cada año en el grado {st.session_state["grado_seleccionado"]}"
     )
     # Mostrar el gráfico
     st.plotly_chart(fig)

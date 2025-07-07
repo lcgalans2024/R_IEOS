@@ -6,7 +6,7 @@ from pages import pantalla_puntaje_global, pt_por_area, pt_por_grupo, pt_por_añ
 st.set_page_config(page_title="Dashboard Institucional", layout="wide")
 
 st.title("ANÁLISIS RESULTADOS INSTITUCIONALES")
-st.subheader("⚠️ Este es un espacio en construcción ⚠️")
+#st.subheader("⚠️ Este es un espacio en construcción ⚠️")
 
 # Configurar sidebar y cargar datos
 sidebar.sidebar_config()
@@ -17,12 +17,12 @@ tabs = [
     "Análisis Por Area",
     "Análisis Por Grupo",
     "Análisis Por Año",
-    "Olimpiadas Institucionales",
+    #"Olimpiadas Institucionales",
     "Descarga de Datos"
 ]
 
 # Crear Tabs
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(tabs)
+tab1, tab2, tab3, tab4, tab6 = st.tabs(tabs)
 
 # Lógica de cada pantalla
 with tab1:
@@ -63,15 +63,15 @@ with tab4:
 
         # Mostrar mensaje de error y sugerencia
         st.error("No se pudo cargar el análisis por año. Por favor, verifica los datos o intenta más tarde.")
-with tab5:
-    try:
-        pantalla_olimpiadas.puntaje_olimpiadas()
-    except Exception as e:
-        st.error(f"Error al cargar la pantalla de análisis de olimpiadas: {e}")
-
-        # Mostrar mensaje de error y sugerencia
-        st.error("No se pudo cargar el análisis de olimpiadas. Por favor, verifica los datos o intenta más tarde.")
-        # Si la función puntaje_olimpiadas no existe, comentar la línea siguiente
+#with tab5:
+#    try:
+#        pantalla_olimpiadas.puntaje_olimpiadas()
+#    except Exception as e:
+#        st.error(f"Error al cargar la pantalla de análisis de olimpiadas: {e}")
+#
+#        # Mostrar mensaje de error y sugerencia
+#        st.error("No se pudo cargar el análisis de olimpiadas. Por favor, verifica los datos o intenta más tarde.")
+#        # Si la función puntaje_olimpiadas no existe, comentar la línea siguiente
 
 with tab6:
     try:
