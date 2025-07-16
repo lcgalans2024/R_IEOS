@@ -184,16 +184,16 @@ def puntaje_por_area():
                          color=nivel_seleccionado,
                          barmode='relative',
                          text_auto=True,
-                 category_orders={nivel_seleccionado: ['1', '2', '3', '4','A-','A1','A2','B1','B+']},  # <- Orden definido
+                 category_orders={nivel_seleccionado: ['1', '2', '3', '4','PA1','A1','A2','B1','B+']},  # <- Orden definido
                  color_discrete_map={
                         '1': 'red',
                         '2': 'orange',
                         '3': 'yellow',
                         '4': 'green',
-                        'A-': 'red',
-                        'A1': "#ff8383",
-                        'A2': 'orange',
-                        'B1': 'yellow',
+                        'PA1': 'red',
+                        'A1': 'orange',
+                        'A2': 'yellow',
+                        'B1': 'green',
                         'B+': 'green'
                     }
                          )

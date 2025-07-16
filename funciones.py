@@ -35,16 +35,14 @@ def asignar_nivel_CN(puntaje):
         return None  # en caso de valores fuera de rango
     
 def asignar_nivel_ingles(puntaje):
-    if 0 <= puntaje < 48.0:
-        return "A-"
-    elif 48.0 <= puntaje < 58.0:
+    if 0.0 <= puntaje < 37.0:
+        return "PA1"
+    elif 37.0 <= puntaje < 58.0:
         return "A1"
-    elif 58.0 <= puntaje < 68.0:
+    elif 58.0 <= puntaje < 71.0:
         return "A2"
-    elif 68.0 <= puntaje < 79.0:
+    elif 71.0 <= puntaje <= 100.0:
         return "B1"
-    elif 79.0 <= puntaje <= 100.0:
-        return "B+"
     else:
         return None  # en caso de valores fuera de rango
  
