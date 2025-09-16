@@ -48,7 +48,7 @@ def puntaje_por_area():
     fig.update_layout(
         xaxis_title="Áreas",
         yaxis_title="Puntaje promedio",
-        title=f"Comportamiento en las areas pora cada grupo"
+        title=f"Comportamiento en las areas por cada grupo"
         #,xaxis_tickangle=-45,
     )
     # Mostrar el gráfico
