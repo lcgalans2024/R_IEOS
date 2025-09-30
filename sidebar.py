@@ -109,3 +109,23 @@ def sidebar_config():
     # Devolver el dataframe filtrado
     #return datos#, datos_filtrados#, datos_filtrados, grado_seleccionado, año_seleccionado#, media_nacional, media_depto, media_munpio, media_colegio
 
+    ################################################# Datos QSQS #################################################
+
+    # Cargar datos de Quiero Ser Quiero Saber
+    try:
+        datos_qsqs = pd.read_excel("Resultados_QSQS.xlsx", sheet_name="G5")
+
+        # Convertir la columna 'Grupo' y 'Año' a string para evitar problemas de tipo
+        #datos_qsqs["Grupo"] = datos_qsqs["Grupo"].astype(str)
+        #datos_qsqs["AÑO"] = datos_qsqs["AÑO"].astype(str)
+#
+        #for col in datos_qsqs.select_dtypes(include=np.float64):
+        #    datos_qsqs[col] = datos_qsqs[col].round(2)
+
+        st.session_state["datos_qsqs"] = datos_qsqs.copy()
+        # Filtrar datos según el grado y año seleccionados
+        #st.session_state["datos_filtrados_qsqs"] = datos_qsqs[(datos_qsqs['Grupo'].str.startswith(grado_seleccionado)) & (datos_qsqs["AÑO"] == año_seleccionado)]
+    except Exception as e:
+        st.warning(f"No se pudieron cargar los datos de Quiero Ser Quiero Saber: {e}")
+        st.session_state["datos_qsqs"] = pd.DataFrame()
+        st.session_state["datos_filtrados_qsqs"] = pd.DataFrame()
