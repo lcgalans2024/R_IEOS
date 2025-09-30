@@ -1,6 +1,6 @@
 import streamlit as st
 import sidebar
-from pages import pantalla_puntaje_global, pt_por_area, pt_por_grupo, pt_por_año, pantalla_olimpiadas, pt_descarga
+from pages import pantalla_puntaje_global, pt_por_area, pt_por_grupo, pt_por_año, pantalla_olimpiadas, pt_descarga, pt_qsqs
 
 # Configuracion general
 st.set_page_config(page_title="Dashboard Institucional", layout="wide")
@@ -18,11 +18,12 @@ tabs = [
     "Análisis Por Grupo",
     "Análisis Por Año",
     #"Olimpiadas Institucionales",
+    "Quiero Ser Quiero Saber",
     "Descarga de Datos"
 ]
 
 # Crear Tabs
-tab1, tab2, tab3, tab4, tab6 = st.tabs(tabs)
+tab1, tab2, tab3, tab4, tab6, tab7 = st.tabs(tabs)
 
 # Lógica de cada pantalla
 with tab1:
@@ -72,8 +73,16 @@ with tab4:
 #        # Mostrar mensaje de error y sugerencia
 #        st.error("No se pudo cargar el análisis de olimpiadas. Por favor, verifica los datos o intenta más tarde.")
 #        # Si la función puntaje_olimpiadas no existe, comentar la línea siguiente
-
 with tab6:
+    try:
+        pt_qsqs.puntaje_qsqs()
+    except Exception as e:
+        st.error(f"Error al cargar la pantalla de análisis de Quiero Ser Quiero Saber: {e}")
+
+        # Mostrar mensaje de error y sugerencia
+        st.error("No se pudo cargar el análisis de Quiero Ser Quiero Saber. Por favor, verifica los datos o intenta más tarde.")
+
+with tab7:
     try:
         pt_descarga.descarga()
     except Exception as e:
