@@ -27,6 +27,8 @@ tab1, tab2, tab3, tab4, tab6, tab7 = st.tabs(tabs)
 
 # Lógica de cada pantalla
 with tab1:
+    #guardar pantalla actual
+    st.session_state.pantalla_actual = "global"
     try:
         pantalla_puntaje_global.puntaje_global()
 
@@ -40,6 +42,8 @@ with tab1:
         #if st.button("Recargar"):
          #   st.experimental_rerun()
 with tab2:
+    #guardar pantalla actual
+    st.session_state.pantalla_actual = "area"
     try:
         pt_por_area.puntaje_por_area()
     except Exception as e:
@@ -49,6 +53,8 @@ with tab2:
         st.error("No se pudo cargar el análisis por área. Por favor, verifica los datos o intenta más tarde.")
 
 with tab3:
+    #guardar pantalla actual
+    st.session_state.pantalla_actual = "grupo"
     try:
         pt_por_grupo.puntaje_por_grupo()
     except Exception as e:
@@ -57,6 +63,8 @@ with tab3:
         # Mostrar mensaje de error y sugerencia
         st.error("No se pudo cargar el análisis por grupo. Por favor, verifica los datos o intenta más tarde.")
 with tab4:
+    #guardar pantalla actual
+    st.session_state.pantalla_actual = "año"
     try:
         pt_por_año.puntaje_por_año()
     except Exception as e:
@@ -74,6 +82,8 @@ with tab4:
 #        st.error("No se pudo cargar el análisis de olimpiadas. Por favor, verifica los datos o intenta más tarde.")
 #        # Si la función puntaje_olimpiadas no existe, comentar la línea siguiente
 with tab6:
+    #guardar pantalla actual
+    st.session_state.pantalla_actual = "qsqs"
     try:
         pt_qsqs.puntaje_qsqs()
     except Exception as e:
@@ -83,7 +93,11 @@ with tab6:
         st.error("No se pudo cargar el análisis de Quiero Ser Quiero Saber. Por favor, verifica los datos o intenta más tarde.")
 
 with tab7:
+    #guardar pantalla actual
+    st.session_state.pantalla_actual = "descarga"
     try:
         pt_descarga.descarga()
     except Exception as e:
         st.error(f"Error al cargar la pantalla para descarga: {e}")
+
+

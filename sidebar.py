@@ -2,7 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+import load_data
+
 def sidebar_config():
+    # Cargar datos
+    load_data.cargar_datos()
+    # Título del sidebar
     st.sidebar.header("Filtros del Dashboard")
 
     # Estilos de botones en HTML + CSS
@@ -71,8 +76,6 @@ def sidebar_config():
     #st.sidebar.markdown(f"**Total de registros:** {dim[0]}")
     #st.dataframe(datos, use_container_width=True)
 
-    
-
     # Convertir la columna 'Grupo' y 'Año' a string para evitar problemas de tipo
     datos["Grupo"] = datos["Grupo"].astype(str)
     datos["AÑO"] = datos["AÑO"].astype(str)
@@ -104,28 +107,20 @@ def sidebar_config():
     # Filtrar datos según el grado y año seleccionados
     st.session_state["datos_filtrados"] = datos[(datos['Grupo'].str.startswith(grado_seleccionado)) & (datos["AÑO"] == año_seleccionado)]
 
-    ################################################# METRICAS EXTERNAS #################################################
-
-    # Devolver el dataframe filtrado
-    #return datos#, datos_filtrados#, datos_filtrados, grado_seleccionado, año_seleccionado#, media_nacional, media_depto, media_munpio, media_colegio
-
     ################################################# Datos QSQS #################################################
 
-    # Cargar datos de Quiero Ser Quiero Saber
-    try:
-        datos_qsqs = pd.read_excel("Resultados_QSQS.xlsx", sheet_name="G5")
+    # Selector de area
+    #area = st.sidebar.selectbox("Seleccione el grado:", st.session_state["datos_qsqs"]['Área'].unique().tolist())
+    #st.session_state["area_seleccionada"] = area
+    # selector de grupo
+    #grupos = st.sidebar.multiselect(
+    #    "Seleccione el grupo:",
+    #    st.session_state["datos_qsqs"]['GRUPO'].unique().tolist(),
+    #    default=st.session_state["datos_qsqs"]['GRUPO'].unique().tolist()
+    #)
+    #st.session_state["grupos_seleccionados"] = grupos
+    
+        
+    
 
-        # Convertir la columna 'Grupo' y 'Año' a string para evitar problemas de tipo
-        #datos_qsqs["Grupo"] = datos_qsqs["Grupo"].astype(str)
-        #datos_qsqs["AÑO"] = datos_qsqs["AÑO"].astype(str)
-#
-        #for col in datos_qsqs.select_dtypes(include=np.float64):
-        #    datos_qsqs[col] = datos_qsqs[col].round(2)
-
-        st.session_state["datos_qsqs"] = datos_qsqs.copy()
-        # Filtrar datos según el grado y año seleccionados
-        #st.session_state["datos_filtrados_qsqs"] = datos_qsqs[(datos_qsqs['Grupo'].str.startswith(grado_seleccionado)) & (datos_qsqs["AÑO"] == año_seleccionado)]
-    except Exception as e:
-        st.warning(f"No se pudieron cargar los datos de Quiero Ser Quiero Saber: {e}")
-        st.session_state["datos_qsqs"] = pd.DataFrame()
-        st.session_state["datos_filtrados_qsqs"] = pd.DataFrame()
+    
