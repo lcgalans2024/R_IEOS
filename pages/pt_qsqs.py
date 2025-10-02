@@ -17,6 +17,14 @@ def puntaje_qsqs():
     #st.dataframe(df, use_container_width=True, hide_index=True)
 
     # filtros
+
+    # selectbox por grado
+    grado = st.selectbox(
+        "Selecciona el grado",
+        options=["Quinto", "Noveno"]
+    )
+    df = df[df['GRUPO'].str.startswith('5' if grado == "Quinto" else '9')]
+
     col1, col2, col3 = st.columns(3)
 
     # Filtro por Área
@@ -148,6 +156,9 @@ def puntaje_qsqs():
     df_resumen = correctas_pregunta.copy()
     
     datos_preguntas = pd.read_excel("df_preguntas.xlsx")
+
+    # Filtrar por grado
+    datos_preguntas = datos_preguntas[datos_preguntas['GRADO'] == grado]
 
     # Crear diccionario Pregunta ID → ENLACE
     map_preguntas = dict(zip(datos_preguntas["Pregunta ID"], datos_preguntas["ENLACE"]))
