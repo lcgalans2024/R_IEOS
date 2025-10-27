@@ -1,10 +1,13 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
+from utils.navegacion import generarMenu
 import load_data
 
 def sidebar_config():
+    # Generar menú de navegación
+    #generarMenu()
+
     # Cargar datos
     load_data.cargar_datos()
     # Título del sidebar
@@ -103,6 +106,15 @@ def sidebar_config():
         high_fs = st.sidebar.checkbox('Sin conectar')
         if high_fs:
             datos = datos[datos['Grupo'].isin(['1101','1102','1103','1104'])].copy()
+
+    # inicializar filtro PIAR
+    if "piar" not in st.session_state:
+        st.session_state["piar"] = False
+
+    #piar = st.sidebar.checkbox('Sin PIAR')
+    #st.session_state["piar"] = piar
+    #if piar:
+    datos = datos[~(datos['Inglés'] == 0)].copy()
 
     # Filtrar datos según el grado y año seleccionados
     st.session_state["datos_filtrados"] = datos[(datos['Grupo'].str.startswith(grado_seleccionado)) & (datos["AÑO"] == año_seleccionado)]

@@ -3,6 +3,9 @@ import altair as alt
 import pandas as pd
 from load_data import agrupar_por_afirmacion
 from funciones import color_hex, color_semaforo, tabla_afirmaciones
+import utils.navegacion
+
+#utils.navegacion.generarMenu()
 
 
 # Función para la pantalla de Quiero Ser Quiero Saber
