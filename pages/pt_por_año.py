@@ -13,10 +13,10 @@ def puntaje_por_año():
         return
     
     # cargar los datos
-    df = st.session_state["datos"]
+    df = st.session_state["datos"][~(st.session_state["datos"]== 0)]
 
     #if st.session_state["piar"]:
-    df = df[~(df['Inglés'] == 0)].copy()
+    #df = df[~(df['Inglés'] == 0)].copy()
 
     ###############################################################################################
     # filtrar datos por grado seleccionado
