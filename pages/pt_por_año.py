@@ -13,7 +13,7 @@ def puntaje_por_año():
         return
     
     # cargar los datos
-    df = st.session_state["datos"][~(st.session_state["datos"]== 0)]
+    df = st.session_state["datos"][~(st.session_state["datos"]['Inglés'] == 0)]
 
     #if st.session_state["piar"]:
     #df = df[~(df['Inglés'] == 0)].copy()
