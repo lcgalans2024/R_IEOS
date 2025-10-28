@@ -108,8 +108,8 @@ def sidebar_config():
             datos = datos[datos['Grupo'].isin(['1101','1102','1103','1104'])].copy()
 
     # inicializar filtro PIAR
-    if "piar" not in st.session_state:
-        st.session_state["piar"] = False
+    #if "piar" not in st.session_state:
+    #    st.session_state["piar"] = False
 
     #piar = st.sidebar.checkbox('Sin PIAR')
     #st.session_state["piar"] = piar
