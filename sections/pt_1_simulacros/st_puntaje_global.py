@@ -4,12 +4,12 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from streamlit_extras.metric_cards import style_metric_cards
 
-def puntaje_global(df):
+def puntaje_global(df, filtros):
     st.header("Análisis Puntaje Global 📈")
 
     # Mostrar gráfico de barras de distribución de puntajes por grupo
     # Agrupar datos por grupo y calcular promedios de puntajes globales
-    datos_agrupados = df.groupby(['Grupo','SIMULACRO','AÑO'])['Puntaje global'].mean().round(2).reset_index()
+    datos_agrupados = df.groupby(['Grupo','SIMULACRO','AÑO'])['Puntaje global'].mean().round(0).reset_index()
     #datos_agrupados["Grupo"] = datos_agrupados["Grupo"].astype(str)
     #st.dataframe(datos_agrupados.reset_index(drop=True), use_container_width=True, hide_index=True)
     
@@ -18,7 +18,7 @@ def puntaje_global(df):
           st.warning("⚠️ No se tienen datos aún para este grado en el año seleccionado.")
     else:
           # Crear grafico de barras puntaje global por SIMULACRO
-          fig = px.bar(df.groupby(['SIMULACRO'])['Puntaje global'].mean().round(2).reset_index(),
+          fig = px.bar(df.groupby(['SIMULACRO'])['Puntaje global'].mean().round(0).reset_index(),
                        x="SIMULACRO",
                        y="Puntaje global",
                        color = 'SIMULACRO',
@@ -39,7 +39,7 @@ def puntaje_global(df):
           fig.update_layout(
               xaxis_title="Grupo",
               yaxis_title="Puntaje global",
-              title=f"Promedio de puntajes globales por prueba para el grado {st.session_state['grado_seleccionado']} en el año {st.session_state['año_seleccionado']}",
+              title=f"Promedio de puntajes globales por prueba para el grado {st.session_state['grado_seleccionado']} en el año {filtros["anio"]}",
           )
 
           #Mostrar el gráfico
@@ -100,11 +100,11 @@ def puntaje_global(df):
         # Mostrar tarjetas con las métricas
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric(label="Mínimo", value=f"{minimo:.2f}")
+            st.metric(label="Mínimo", value=f"{minimo:.0f}")
         with col2:
-            st.metric(label="Máximo", value=f"{maximo:.2f}")
+            st.metric(label="Máximo", value=f"{maximo:.0f}")
         with col3:
-            st.metric(label="Promedio", value=f"{media:.2f}")
+            st.metric(label="Promedio", value=f"{media:.0f}")
         style_metric_cards(border_color="#3A74E7")
 
         #Ordenar por 'Puntaje global' y seleccionar los top 10

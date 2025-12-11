@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from streamlit_extras.metric_cards import style_metric_cards
 from funciones import asignar_nivel_lc, asignar_nivel_M, asignar_nivel_CN, asignar_nivel_ingles, asignar_nivel_CN as asignar_nivel_SC
 
-def puntaje_por_area():
+def puntaje_por_area(df,filtros):
     st.header("Análisis por Área 🧮")
 
     # Verifica si los datos están en session_state
@@ -14,16 +14,17 @@ def puntaje_por_area():
         st.warning("No se han cargado datos aún.")
         return
     
+
+    
     # cargar los datos
-    df = st.session_state["datos_filtrados"].groupby(['SIMULACRO'])[["Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(2).reset_index()
-    df_p = st.session_state["datos_filtrados"].groupby(['Grupo'
+    df_p = df.groupby(['Grupo'
                                                          #,'SIMULACRO'
                                                          ])[["Matemáticas",
                                                              "Lectura crítica",
                                                              "Ciencias naturales",
                                                              "Sociales y ciudadanas",
                                                              "Inglés"
-                                                             ]].mean().round(2).reset_index()
+                                                             ]].mean().round(0).reset_index()
     #st.dataframe(df_p.reset_index(drop=True), use_container_width=True, hide_index=True)
     # deretir datos por columnas de areas
     df_melt = df_p.melt(id_vars=['Grupo'], var_name="Área", value_name="Promedio")
@@ -54,13 +55,14 @@ def puntaje_por_area():
     # Mostrar el gráfico
     st.plotly_chart(fig)
 
+    df_mean = df.groupby(['SIMULACRO'])[["Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(0).reset_index()
     # Validar si hay datos
     if df.empty:
         st.warning("⚠️ No se tienen datos aún para este grado en el año seleccionado.")
     else:
 
         # derretir datos_agrupados por columnas de areas
-        df_derretidos = df.melt(id_vars=['SIMULACRO'], var_name="Área", value_name="Promedio")
+        df_derretidos = df_mean.melt(id_vars=['SIMULACRO'], var_name="Área", value_name="Promedio")
         # Crear gráfico de barras
         fig = px.bar(df_derretidos,
                      x ="Área",
@@ -82,7 +84,7 @@ def puntaje_por_area():
         fig.update_layout(
             xaxis_title="Áreas",
             yaxis_title="Puntaje promedio",
-            title=f"Distribución de puntajes del grado {st.session_state['grado_seleccionado']} por área para cada prueba en el año {st.session_state['año_seleccionado']}",
+            title=f"Distribución de puntajes del grado {st.session_state['grado_seleccionado']} por área para cada prueba en el año {filtros["anio"]}",
             #,xaxis_tickangle=-45,
         )
 
@@ -93,11 +95,11 @@ def puntaje_por_area():
 
         with col1:
             # seleccionar el area
-            area_seleccionada = st.selectbox("Seleccione un área:", df.columns[1:], key="area_seleccionada")
+            area_seleccionada = st.selectbox("Seleccione un área:", df_mean.columns[1:], key="area_seleccionada")
 
         # Filtrar los datos según el área y el simulacro seleccionados
         
-        datos_filtrados_area = st.session_state["datos_filtrados"][['SIMULACRO','Grupo',area_seleccionada]].copy()
+        datos_filtrados_area = df[['SIMULACRO','Grupo',area_seleccionada]].copy()
 
         #st.dataframe(datos_filtrados_area.reset_index(drop=True), use_container_width=True, hide_index=True)
 
@@ -119,11 +121,11 @@ def puntaje_por_area():
         # Mostrar tarjetas con las métricas
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric(label=f"Promedio Grado {st.session_state.grado_seleccionado}", value=f"{media:.2f}")
+            st.metric(label=f"Promedio Grado {st.session_state.grado_seleccionado}", value=f"{media:.0f}")
         with col2:
-            st.metric(label=f"Máximo Grado {st.session_state.grado_seleccionado}", value=f"{maximo:.2f}")
+            st.metric(label=f"Máximo Grado {st.session_state.grado_seleccionado}", value=f"{maximo:.0f}")
         with col3:
-            st.metric(label=f"Mínimo Grado {st.session_state.grado_seleccionado}", value=f"{minimo:.2f}")
+            st.metric(label=f"Mínimo Grado {st.session_state.grado_seleccionado}", value=f"{minimo:.0f}")
         style_metric_cards(border_color="#3A74E7")
 
         # Validar si hay datos filtrados
@@ -131,7 +133,7 @@ def puntaje_por_area():
             st.warning(f"⚠️ No se tienen datos aún para este grado en el año seleccionado.")
         else:
             # Crear gráfico de barras
-            fig = px.bar(datos_filtrados_area.groupby(['Grupo','SIMULACRO'])[area_seleccionada].mean().round(2).reset_index(),
+            fig = px.bar(datos_filtrados_area.groupby(['Grupo','SIMULACRO'])[area_seleccionada].mean().round(0).reset_index(),
                          x="Grupo",
                          y=area_seleccionada,
                          color="SIMULACRO",
@@ -151,7 +153,7 @@ def puntaje_por_area():
             fig.update_layout(
                 xaxis_title="Grupo",
                 yaxis_title="Puntaje promedio",
-                title=f"Distribución de puntajes en {area_seleccionada} por grupo para cada prueba en el año {st.session_state['año_seleccionado']}",
+                title=f"Distribución de puntajes en {area_seleccionada} por grupo para cada prueba en el año {filtros["anio"]}",
             )
 
             # Mostrar el gráfico
@@ -159,21 +161,21 @@ def puntaje_por_area():
         
         try:
             if area_seleccionada == "Lectura crítica":
-                nivel_seleccionado = 'ND_LC'
+                nivel_seleccionado = 'Nivel_LC'
             elif area_seleccionada == "Matemáticas":
-                nivel_seleccionado = 'ND_M'
+                nivel_seleccionado = 'Nivel_M'
             elif area_seleccionada == "Ciencias naturales":
-                nivel_seleccionado = 'ND_CN'
+                nivel_seleccionado = 'Nivel_CN'
             elif area_seleccionada == "Sociales y ciudadanas":
-                nivel_seleccionado = 'ND_SC'
+                nivel_seleccionado = 'Nivel_SC'
             elif area_seleccionada == "Inglés":
-                nivel_seleccionado = 'ND_IG'
+                nivel_seleccionado = 'Nivel_IG'
 
-            df_N_simulacro = st.session_state["datos_filtrados"][st.session_state["datos_filtrados"]['SIMULACRO'] == simulacro_seleccionado].copy()
-            df_N_simulacro['ND_SC'] = df_N_simulacro['Sociales y ciudadanas'].apply(asignar_nivel_CN).astype(str)
-            df_N_simulacro['ND_IG'] = df_N_simulacro['Inglés'].apply(asignar_nivel_ingles).astype(str)
+            df_N_simulacro = df[df['SIMULACRO'] == simulacro_seleccionado].copy()
+            #df_N_simulacro['ND_SC'] = df_N_simulacro['Sociales y ciudadanas'].apply(asignar_nivel_CN).astype(str)
+            #df_N_simulacro['ND_IG'] = df_N_simulacro['Inglés'].apply(asignar_nivel_ingles).astype(str)
             df_N = df_N_simulacro.groupby(['Grupo',nivel_seleccionado])[area_seleccionada].count().reset_index()
-            df_N["porcentaje"] = df_N.groupby(['Grupo'])[area_seleccionada].transform(lambda x: x / x.sum() * 100).round(2)
+            df_N["porcentaje"] = df_N.groupby(['Grupo'])[area_seleccionada].transform(lambda x: x / x.sum() * 100).round(0)
             #st.dataframe(df_N.reset_index(drop=True), use_container_width=True, hide_index=True)
             # mostrar ños tipos de las columnas
 
@@ -201,7 +203,7 @@ def puntaje_por_area():
             fig.update_layout(
                 xaxis_title="Grupo",
                 yaxis_title="Porcentaje",
-                title=f"Distribución porcentual niveles de desempeño en {area_seleccionada} por grupo en la prueba {simulacro_seleccionado} del año {st.session_state['año_seleccionado']}",
+                title=f"Distribución porcentual niveles de desempeño en {area_seleccionada} por grupo en la prueba {simulacro_seleccionado} del año {filtros["anio"]}",
             )
             # Mostrar el gráfico
             st.plotly_chart(fig)
@@ -234,7 +236,7 @@ def puntaje_por_area():
         col1, col2 = st.columns(2)
 
         # filtrar datos2 por grupo seleccionado, area seleccionada y simulacro seleccionado
-        datos3 = st.session_state["datos_filtrados"][(st.session_state["datos_filtrados"]['SIMULACRO'] == simulacro_seleccionado)][["Grupo","Nombre alumno", area_seleccionada]].copy()
+        datos3 = df[(df['SIMULACRO'] == simulacro_seleccionado)][["Grupo","Nombre alumno", area_seleccionada]].copy()
 
         with col1:
 

@@ -13,13 +13,13 @@ def puntaje_por_año():
         return
     
     # cargar los datos
-    df = st.session_state["datos"]
+    df = st.session_state["Datos"]
 
     ###############################################################################################
     # filtrar datos por grado seleccionado
     df0 = df[df['Grupo'].str.startswith(st.session_state["grado_seleccionado"])]
 
-    df3 = df0.groupby(['AÑO','SIMULACRO'])[["Puntaje global","Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(2).reset_index().melt(id_vars=["AÑO","SIMULACRO"], var_name="Área", value_name="Promedio")
+    df3 = df0.groupby(['AÑO','SIMULACRO'])[["Puntaje global","Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(0).reset_index().melt(id_vars=["AÑO","SIMULACRO"], var_name="Área", value_name="Promedio")
     #st.dataframe(df3.reset_index(drop=True), use_container_width=True, hide_index=True)
     
     # Crear selector para el área
@@ -54,7 +54,7 @@ def puntaje_por_año():
     df1 = df[((df['AÑO'] == '2025') & (df['Grupo'].str.startswith('110'))) | ((df['AÑO'] == '2024') & (df['Grupo'].str.startswith('100')))]
 
     # Agrupamos por año y calculamos los promedios de las areas
-    df2 = df1.groupby(['AÑO'])[["Puntaje global","Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(2).reset_index().melt(id_vars="AÑO", var_name="Área", value_name="Promedio")
+    df2 = df1.groupby(['AÑO'])[["Puntaje global","Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(0).reset_index().melt(id_vars="AÑO", var_name="Área", value_name="Promedio")
 
     # Realizamos grafico de barras
     fig = px.bar(df2[df2["Área"] == "Puntaje global"],

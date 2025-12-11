@@ -6,10 +6,10 @@ import load_data
 
 def sidebar_config():
     # Generar menú de navegación
-    #generarMenu()
+    generarMenu()
 
     # Cargar datos
-    load_data.cargar_datos()
+    #load_data.cargar_datos()
     # Título del sidebar
     st.sidebar.header("Filtros del Dashboard")
 

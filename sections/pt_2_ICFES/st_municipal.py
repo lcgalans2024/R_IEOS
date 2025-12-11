@@ -1,17 +1,9 @@
 import streamlit as st
-import pandas as pd
-
 import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import altair as alt
 from streamlit_extras.metric_cards import style_metric_cards
 
-import utils.navegacion 
-import utils.data
-
-utils.navegacion.generarMenu()
-
-from sections.pt_3 import st_qsqs
-
-st_qsqs.puntaje_qsqs(st.session_state["datos_qsqs"])
+def ranking(df=None, variable=None):
+    st.header("Análisis ET 📈")

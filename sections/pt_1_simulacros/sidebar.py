@@ -2,7 +2,7 @@ import streamlit as st
 
 def render_sidebar():
     with st.sidebar:
-        st.header("🧭 Sidebar — Pantalla 1")
+        #st.header("🧭 Sidebar — Pantalla 1")
         # Selector de grado
         grados = ["11", "10"]
         grado = st.selectbox("Grado", grados, key="p1_grado")
@@ -12,5 +12,5 @@ def render_sidebar():
             # -- Select for high sample rate data
             high_fs = st.checkbox('Sin conectar')
 
-        piar = st.checkbox('Sin PIAR')
-    return {"anio": anio, "grado": grado, "high_fs": high_fs if anio != "2025" else False, "piar": piar}
+        #piar = st.checkbox('Sin PIAR')
+    return {"anio": anio, "grado": grado, "high_fs": high_fs if anio != "2025" else False}#, "piar": piar}

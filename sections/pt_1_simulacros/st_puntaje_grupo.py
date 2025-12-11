@@ -4,16 +4,16 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from streamlit_extras.metric_cards import style_metric_cards
 
-def puntaje_por_grupo():
+def puntaje_por_grupo(df,filtros):
     st.header("Análisis por Grupo 👥")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
         # seleccionar el area
-        grupo_seleccionado = st.selectbox("Seleccione un grupo:", st.session_state['datos_filtrados'].Grupo.unique(), key="grupo_seleccionada")
+        grupo_seleccionado = st.selectbox("Seleccione un grupo:", df.Grupo.unique(), key="grupo_seleccionada")
 
-        datos_grupos = st.session_state['datos_filtrados'].groupby(['Grupo','SIMULACRO'])[["Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(2).reset_index()
+        datos_grupos = df.groupby(['Grupo','SIMULACRO'])[["Matemáticas", "Lectura crítica", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"]].mean().round(0).reset_index()
 
     # derretir datos_agrupados por columnas de areas
     datos_derretidos = datos_grupos.melt(id_vars=['Grupo','SIMULACRO'], var_name="Área", value_name="Promedio")
@@ -42,7 +42,7 @@ def puntaje_por_grupo():
     fig.update_layout(
           xaxis_title="Áreas",
           yaxis_title="Promedios",
-          title=f"Distribución de puntajes por área del grupo {grupo_seleccionado} en el año {st.session_state['año_seleccionado']}"
+          title=f"Distribución de puntajes por área del grupo {grupo_seleccionado} en el año {filtros["anio"]}"
           #xaxis_tickangle=-45,
     )
 
@@ -63,8 +63,8 @@ def puntaje_por_grupo():
         # Seleccionar el simulacro
         simulacro_seleccionado = st.selectbox("Seleccione un simulacro:", datos_grupo_seleccionado["SIMULACRO"].unique(), key="simulacroseleccionado")
     # Filtrar los datos según el área y el simulacro seleccionados
-    datos4 = st.session_state['datos_filtrados'][(st.session_state['datos_filtrados']["Grupo"]==grupo_seleccionado) &
-                                                 (st.session_state['datos_filtrados']["SIMULACRO"]==simulacro_seleccionado)
+    datos4 = df[(df["Grupo"]==grupo_seleccionado) &
+                                                 (df["SIMULACRO"]==simulacro_seleccionado)
                                                  ][["Nombre alumno", area]].copy()
     # Validar si hay datos filtrados
     if datos4.empty:
@@ -77,11 +77,11 @@ def puntaje_por_grupo():
     # Mostrar tarjetas con las métricas
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric(label=f"Promedio Grupo {grupo_seleccionado}", value=f"{media:.2f}")
+        st.metric(label=f"Promedio Grupo {grupo_seleccionado}", value=f"{media:.0f}")
     with col2:
-        st.metric(label=f"Máximo Grupo {grupo_seleccionado}", value=f"{maximo:.2f}")
+        st.metric(label=f"Máximo Grupo {grupo_seleccionado}", value=f"{maximo:.0f}")
     with col3:
-        st.metric(label=f"Mínimo Grupo {grupo_seleccionado }", value=f"{minimo:.2f}")
+        st.metric(label=f"Mínimo Grupo {grupo_seleccionado }", value=f"{minimo:.0f}")
     #style_metric_cards(border_color="#3A74E7")
 
     #st.subheader(f"Mejores y perores puntajes en el {simulacro_seleccionado} para el area de {area_seleccionada}")
