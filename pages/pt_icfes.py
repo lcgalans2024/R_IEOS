@@ -116,6 +116,10 @@ with tab3:
         st_grupos.mostrar_puntaje_areas(df, año_seleccionado)
 
         st_areas.niveles_desempeño_areas(df)
+
+        area_seleccionado = st.selectbox("Selecciona el area:", options=["Lectura crítica", "Matemáticas", "Ciencias naturales", "Sociales y ciudadanas", "Inglés"], key="select_area", index=0)
+
+        st_grupos.top_tail(df, grupo_seleccionado, area_seleccionado)
     except Exception as e:
         st.error(f"Error al cargar la pantalla de análisis por área: {e}")
 

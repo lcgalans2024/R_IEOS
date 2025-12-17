@@ -59,3 +59,64 @@ def mostrar_puntaje_areas(df,año=None):
         )
     # Mostrar el gráfico
     st.plotly_chart(fig)
+# Mejores y peres puntajes por grupo
+def top_tail(df, grupo_seleccionado, area):
+    st.markdown(
+        f"""
+        <div style='
+            background-color:#f0f8ff; 
+            padding:15px;
+            border-radius:10px;
+            border: 1px solid #d0d0d0;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align:center
+            '>
+            <span style='font-size:22px; font-weight:600'>
+                Mejores y peores puntajes en la prueba 
+                <span style='color:#1f77b4'>ICFE</span> 
+                para el área de 
+                <span style='color:#d62728'>{area}</span>
+                del grupo
+                <span style='color:#2ca02c'>{grupo_seleccionado}</span>
+            </span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    col1, col2 = st.columns(2)
+    # filtrar datos2 por grupo seleccionado, area seleccionada y simulacro seleccionado
+    with col1:
+        # seleccionar el grupo
+        #grupo_seleccionado = st.selectbox("Seleccione un grupo:", datos_filtrados_simulacro["Grupo"].unique(), key="grupo_seleccionado")
+        #st.subheader("Mejores 10 puntajes")
+        st.markdown(
+            f"""
+            <div style='
+                    text-align:center
+                    '>
+                <span style='font-size:22px; font-weight:600'>
+                    Mejores 10 puntajes
+                </span>
+            </div>
+            """,
+        unsafe_allow_html=True
+    )
+        # Ordenar por puntaje de area seleccionada y mostrar top 10
+        st.dataframe(df[["Nombre alumno", area]].sort_values(by=area, ascending=False).head(10).reset_index(drop=True), use_container_width=True, hide_index=True)
+    
+    with col2:
+        #st.subheader("Ultimos 10 puntajes")
+        st.markdown(
+            f"""
+            <div style='
+                    text-align:center
+                    '>
+                <span style='font-size:22px; font-weight:600'>
+                    Peores 10 puntajes
+                </span>
+            </div>
+            """,
+        unsafe_allow_html=True
+    )
+        # Ordenar por puntaje de area seleccionada y mostrar top 10
+        st.dataframe(df[["Nombre alumno", area]].sort_values(by=area, ascending=False).tail(10).reset_index(drop=True), use_container_width=True, hide_index=True)
