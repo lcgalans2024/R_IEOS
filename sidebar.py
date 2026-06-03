@@ -101,7 +101,7 @@ def sidebar_config():
     st.session_state["año_seleccionado"] = st.sidebar.selectbox("Seleccione el año", años, index=1)
     año_seleccionado = st.session_state["año_seleccionado"]
 
-    if año_seleccionado != "2025":
+    if año_seleccionado not in datos[datos.AÑO != "2024"]["AÑO"].unique():
         # -- Select for high sample rate data
         high_fs = st.sidebar.checkbox('Sin conectar')
         if high_fs:
