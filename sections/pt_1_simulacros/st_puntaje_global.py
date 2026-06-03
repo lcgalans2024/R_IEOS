@@ -39,7 +39,7 @@ def puntaje_global(df, filtros):
           fig.update_layout(
               xaxis_title="Grupo",
               yaxis_title="Puntaje global",
-              title=f"Promedio de puntajes globales por prueba para el grado {st.session_state['grado_seleccionado']} en el año {filtros["anio"]}",
+              title=f"Promedio de puntajes globales por prueba para el grado {filtros['grado']} en el año {filtros['anio']}",
           )
 
           #Mostrar el gráfico
@@ -80,13 +80,13 @@ def puntaje_global(df, filtros):
     columna_prueba = "SIMULACRO"
 
     # Obtener grupos únicos de la columna elegida
-    pruebas_unicos = st.session_state["datos_filtrados"][columna_prueba].unique()
+    pruebas_unicos = datos_agrupados[columna_prueba].unique()
 
     # Crear un selector de grupo con st.selectbox
     prueba_seleccionada = st.selectbox("Seleccione un simulacro o ICFES:", pruebas_unicos)
 
     # Filtrar los datos según la prueba seleccionada
-    datos_filtrados = st.session_state["datos_filtrados"][st.session_state["datos_filtrados"][columna_prueba] == prueba_seleccionada]
+    datos_filtrados = datos_agrupados[datos_agrupados[columna_prueba] == prueba_seleccionada]
 
     # Validar si hay datos filtrados
     if datos_filtrados.empty:
@@ -108,7 +108,7 @@ def puntaje_global(df, filtros):
         style_metric_cards(border_color="#3A74E7")
 
         #Ordenar por 'Puntaje global' y seleccionar los top 10
-        datos_top_10 = datos_filtrados.sort_values(by='Puntaje global', ascending=False).head(10)
+        datos_top_10 = df.sort_values(by='Puntaje global', ascending=False).head(10)
         datos_top_10 = datos_top_10[["Grupo","Nombre alumno","Puntaje global"]].reset_index(drop=True)
         datos_top_10["Grupo"] = datos_top_10["Grupo"].astype(str)
         # Crear gráfico de barras para los top 10
