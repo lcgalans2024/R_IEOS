@@ -19,11 +19,11 @@ import utils.data
 from sections.pt_2_ICFES import st_general, st_areas, st_grupos, st_municipal#, st_descarga
 
 # Configurar sidebar
-#filtros = sidebar.render_sidebar()  # <- todo el sidebar queda encapsulado
+filtros = sidebar.render_sidebar()  # <- todo el sidebar queda encapsulado
 st.title("ICFES")
 
-# Cargar datos al iniciar la aplicación
-datos_icfes = st.session_state.datos_icfes
+# Cargar datos del ICFES al iniciar la aplicación
+datos_icfes = utils.data.cargar_datos_icfes()
 
 # Aplicar filtros
 #datos_icfes = utils.data.filtrar_datos(datos_icfes, filtros)
@@ -49,10 +49,10 @@ with tab1:
     #guardar pantalla actual
     st.session_state.pantalla_actual = "global"
     try:
-        st_general.puntaje_global(datos_icfes, variable="Puntaje global")
+        st_general.puntaje_global(datos_icfes, filtros, variable="Puntaje global")
 
         # Puntaje global por grupo
-        st_general.puntaje_por_grupo(datos_icfes, variable="Puntaje global")
+        st_general.puntaje_por_grupo(datos_icfes, filtros, variable="Puntaje global")
         
     except Exception as e:
         st.error(f"Error al cargar la pantalla de análisis global: {e}")

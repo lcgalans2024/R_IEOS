@@ -34,7 +34,7 @@ def puntaje_por_año():
                  category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
                  color_discrete_map={
                         'S1': '#83c9ff',
-                        'S2': 'red',
+                        'S2': '#39c9ff',
                         'ED1': 'teal',
                         'S3': 'pink',
                         'ICFES': "#1466c3"

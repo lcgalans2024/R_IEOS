@@ -39,7 +39,7 @@ def puntaje_por_area(df,filtros):
                  #category_orders={'Grupo': df_p['Grupo'].unique()},  # <- Orden definido
                  color_discrete_map={
                         '1': '#83c9ff',
-                        '2': 'red',
+                        '2': '#39c9ff',
                         '3': 'teal',
                         '4': 'pink',
                         '5': "#1466c3"
@@ -73,7 +73,7 @@ def puntaje_por_area(df,filtros):
                  category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
                  color_discrete_map={
                         'S1': '#83c9ff',
-                        'S2': 'red',
+                        'S2': '#39c9ff',
                         'ED1': 'teal',
                         'S3': 'pink',
                         'ICFES': "#1466c3"
@@ -128,12 +128,14 @@ def puntaje_por_area(df,filtros):
             st.metric(label=f"Mínimo Grado {st.session_state.grado_seleccionado}", value=f"{minimo:.0f}")
         style_metric_cards(border_color="#3A74E7")
 
+        datos_filtrados_area_1 = datos_filtrados_area.copy()
+        datos_filtrados_area_1["Grupo"] = datos_filtrados_area_1["Grupo"].astype(str).apply(lambda x: x[:2] + "_" + x[3:] if len(x) > 2 else x)
         # Validar si hay datos filtrados
-        if datos_filtrados_area.empty:
+        if datos_filtrados_area_1.empty:
             st.warning(f"⚠️ No se tienen datos aún para este grado en el año seleccionado.")
         else:
             # Crear gráfico de barras
-            fig = px.bar(datos_filtrados_area.groupby(['Grupo','SIMULACRO'])[area_seleccionada].mean().round(0).reset_index(),
+            fig = px.bar(datos_filtrados_area_1.groupby(['Grupo','SIMULACRO'])[area_seleccionada].mean().round(0).reset_index(),
                          x="Grupo",
                          y=area_seleccionada,
                          color="SIMULACRO",
@@ -142,7 +144,7 @@ def puntaje_por_area(df,filtros):
                  category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
                  color_discrete_map={
                         'S1': '#83c9ff',
-                        'S2': 'red',
+                        'S2': '#39c9ff',
                         'ED1': 'teal',
                         'S3': 'pink',
                         'ICFES': "#1466c3"
@@ -178,9 +180,10 @@ def puntaje_por_area(df,filtros):
             df_N["porcentaje"] = df_N.groupby(['Grupo'])[area_seleccionada].transform(lambda x: x / x.sum() * 100).round(0)
             #st.dataframe(df_N.reset_index(drop=True), use_container_width=True, hide_index=True)
             # mostrar ños tipos de las columnas
-
+            df_N_1 = df_N.copy()
+            df_N_1["Grupo"] = df_N_1["Grupo"].astype(str).apply(lambda x: x[:2] + "_" + x[3:] if len(x) > 2 else x)
             # Crear gráfico de barras
-            fig = px.bar(df_N,
+            fig = px.bar(df_N_1,
                          x="Grupo",
                          y="porcentaje",
                          color=nivel_seleccionado,

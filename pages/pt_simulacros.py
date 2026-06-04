@@ -88,11 +88,11 @@ with tab5:
     except Exception as e:
         st.error(f"Error al cargar la pantalla para descarga: {e}")
 
-with tab6:
-    st.session_state.pantalla_actual = "info"
-    st.header("Validación de Información ℹ️")
-
-    st.dataframe(df.head(10), use_container_width=True)
-    # mostrar columnas disponibles
-    st.subheader("Columnas disponibles en el conjunto de datos:")
-    st.write(df.columns.tolist())
+#with tab6:
+#    st.session_state.pantalla_actual = "info"
+#    st.header("Validación de Información ℹ️")
+#
+#    st.dataframe(df.head(10), use_container_width=True)
+#    # mostrar columnas disponibles
+#    st.subheader("Columnas disponibles en el conjunto de datos:")
+#    st.write(df.columns.tolist())

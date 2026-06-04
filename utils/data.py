@@ -106,3 +106,9 @@ def cargar_datos_historicos():
     df = pd.read_excel(DATA_DIR / "Resultados_historico_2016_2024.xlsx")
 
     return df
+
+def cargar_datos_icfes():
+    df = cargar_datos()
+    # filtramos por columna SIMULACRO para quedarnos solo con los datos del ICFES
+    df = df[df.SIMULACRO == "ICFES"].copy()
+    return df

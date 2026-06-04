@@ -27,7 +27,7 @@ def puntaje_global(df, filtros):
                  category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
                  color_discrete_map={
                         'S1': '#83c9ff',
-                        'S2': 'red',
+                        'S2': '#39c9ff',
                         'ED1': 'teal',
                         'S3': 'pink',
                         'ICFES': "#1466c3"
@@ -46,7 +46,14 @@ def puntaje_global(df, filtros):
           st.plotly_chart(fig)
 
           # Crear gráfico de barras puntaje global por grupo
-          fig = px.bar(datos_agrupados,
+          # remplazar en Grupo el tercero digito por "_" para los grupos
+    datos_agrupados_1 = datos_agrupados.copy()
+    datos_agrupados_1["Grupo"] = datos_agrupados_1["Grupo"].astype(str).apply(lambda x: x[:2] + "_" + x[3:] if len(x) > 2 else x)
+    # Validar si hay datos
+    if datos_agrupados_1.empty:
+            st.warning("⚠️ No se tienen datos aún para este año seleccionado.")
+    else:
+          fig = px.bar(datos_agrupados_1,
                        x="Grupo",
                        y="Puntaje global",
                        color = 'SIMULACRO',
@@ -55,7 +62,7 @@ def puntaje_global(df, filtros):
                  category_orders={'SIMULACRO': ['S1', 'S2', 'S3', 'ED1', 'ICFES']},  # <- Orden definido
                  color_discrete_map={
                         'S1': '#83c9ff',
-                        'S2': 'red',
+                        'S2': '#39c9ff',
                         'ED1': 'teal',
                         'S3': 'pink',
                         'ICFES': "#1466c3"
