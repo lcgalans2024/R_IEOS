@@ -15,7 +15,7 @@ st.title("Simulacros ICFES")
 #st.write(filtros)
 
 # Cargar df al iniciar la aplicación
-#st.write(datos_icfes.head())
+st.write(st.session_state.Datos.head())
 # mostrar tipos de datos
 #st.write(df.dtypes)
 # Aplicar filtros
