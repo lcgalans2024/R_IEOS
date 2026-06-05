@@ -93,7 +93,7 @@ def puntaje_global(df, filtros):
     prueba_seleccionada = st.selectbox("Seleccione un simulacro o ICFES:", pruebas_unicos)
 
     # Filtrar los datos según la prueba seleccionada
-    datos_filtrados = datos_agrupados[datos_agrupados[columna_prueba] == prueba_seleccionada]
+    datos_filtrados = df[df['SIMULACRO'] == prueba_seleccionada]
 
     # Validar si hay datos filtrados
     if datos_filtrados.empty:
@@ -115,7 +115,7 @@ def puntaje_global(df, filtros):
         style_metric_cards(border_color="#3A74E7")
 
         #Ordenar por 'Puntaje global' y seleccionar los top 10
-        datos_top_10 = df.sort_values(by='Puntaje global', ascending=False).head(10)
+        datos_top_10 = datos_filtrados[datos_filtrados['SIMULACRO'] == prueba_seleccionada].sort_values(by='Puntaje global', ascending=False).head(10)
         datos_top_10 = datos_top_10[["Grupo","Nombre alumno","Puntaje global"]].reset_index(drop=True)
         datos_top_10["Grupo"] = datos_top_10["Grupo"].astype(str)
         # Crear gráfico de barras para los top 10
