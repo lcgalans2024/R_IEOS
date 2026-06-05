@@ -1,5 +1,9 @@
 import streamlit as st
 import pandas as pd
+from utils.session_state_init import inicializar_session_state
+
+# Inicialización robusta de session_state
+inicializar_session_state()
 import sections.pt_1_simulacros.sidebar as sidebar
 import utils.navegacion
 
