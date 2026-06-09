@@ -94,7 +94,7 @@ def asignar_nivel_desempeno(df):
     df['Nivel_M'] = df['Matemáticas'].apply(lambda x: asignar_nivel_M(x)).astype(str)
     df['Nivel_CN'] = df['Ciencias naturales'].apply(lambda x: asignar_nivel_CN(x)).astype(str)
     df['Nivel_SC'] = df['Sociales y ciudadanas'].apply(lambda x: asignar_nivel_CN(x)).astype(str)
-    df['Nivel_ingles'] = df['Inglés'].apply(lambda x: asignar_nivel_ingles(x)).astype(str)
+    df['Nivel_IG'] = df['Inglés'].apply(lambda x: asignar_nivel_ingles(x)).astype(str)
     df['Nivel_ingles_numerico'] = df['Inglés'].apply(lambda x: asignar_nivel_ingles_numerico(x)).astype(str)
     return df
 
