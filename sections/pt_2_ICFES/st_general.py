@@ -42,8 +42,16 @@ def puntaje_global(df, filtros, variable=None):
 def puntaje_por_grupo(df, filtros, variable=None):
     st.header("Puntaje Global por Grupo 📊")
 
+    # Definimos dos columnas
+    col1, col2 = st.columns(2)
+    with col1:
+        # Selector de año para gráfico por grupo
+        año_seleccionado = st.selectbox("Selecciona el año:", options=df["AÑO"].unique(), key="select_año_area", index=1)
+    with col2:
+        st.write(" ")
+
     # Gráfico de barras del puntaje global promedio por grupo
-    df_plot = df[df.AÑO == filtros["anio"]].groupby(['Grupo','AÑO'])['Puntaje global'].mean().round(0).reset_index()
+    df_plot = df[df.AÑO == año_seleccionado].groupby(['Grupo','AÑO'])['Puntaje global'].mean().round(0).reset_index()
     #Validar si hay datos
     if df_plot.empty:
         st.warning("⚠️ No se tienen datos aún para este año seleccionado.")
@@ -68,6 +76,6 @@ def puntaje_por_grupo(df, filtros, variable=None):
         final_chart = (chart + text).properties(
                 width=600,
                 height=400,
-                title=f"Promedio puntaje global por grupo año {filtros['anio']}"
+                title=f"Promedio puntaje global por grupo año {año_seleccionado}"
             )
         st.altair_chart(final_chart, use_container_width=True)
