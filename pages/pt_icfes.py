@@ -72,7 +72,7 @@ with tab2:
         col1, col2 = st.columns(2)
         with col1:
             # Selector de año para gráfico por grupo
-            año_seleccionado = st.selectbox("Selecciona el año:", options=datos_icfes["AÑO"].unique(), key="select_año_area", index=1)
+            año_seleccionado = st.selectbox("Selecciona el año:", options=datos_icfes["AÑO"].unique(), key="select_año_grupo", index=1)
         with col2:
             st.write(" ")
         
@@ -105,7 +105,7 @@ with tab3:
         col1, col2 = st.columns(2)
         with col1:
             # Selector de año para gráfico por grupo
-            año_seleccionado = st.selectbox("Selecciona el año:", options=datos_icfes["AÑO"].unique(), key="select_año_grupo", index=1)
+            año_seleccionado = st.selectbox("Selecciona el año:", options=datos_icfes["AÑO"].unique(), key="select_año_grupo_3", index=1)
         with col2:
             grupo_seleccionado = st.selectbox("Selecciona el grupo:", options=datos_icfes[datos_icfes["AÑO"]==año_seleccionado]["Grupo"].unique(), key="select_grupo", index=0)
 
