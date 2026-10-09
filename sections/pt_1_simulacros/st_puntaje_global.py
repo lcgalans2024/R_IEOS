@@ -80,6 +80,7 @@ def puntaje_global(df, filtros):
               xaxis_title="Grupo",
               yaxis_title="Puntaje global",
               title="Distribución de puntajes globales por grupo en las diferentes pruebas",
+              dragmode=False
           )
 
           # Bloquear cambios de escala en ambos ejes
