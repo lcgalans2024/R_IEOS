@@ -57,6 +57,9 @@ def mostrar_puntaje_areas(df,año=None):
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
             )
         )
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
     # Mostrar el gráfico
     st.plotly_chart(fig)
 # Mejores y peres puntajes por grupo

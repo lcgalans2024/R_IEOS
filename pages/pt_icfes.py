@@ -192,6 +192,10 @@ with tab4:
             margin=dict(l=20, r=20, t=40, b=20)
         )
 
+        # Bloquear cambios de escala en ambos ejes
+        fig.update_xaxes(fixedrange=True)         
+        fig.update_yaxes(fixedrange=True)         
+        
         st.plotly_chart(fig)
     
         colegio_seleccionado = st.selectbox("Selecciona la institución:", options=df["Colegio"].unique(), index=0)
@@ -226,6 +230,10 @@ with tab4:
             margin=dict(l=20, r=20, t=40, b=20)
         )
 
+        # Bloquear cambios de escala en ambos ejes
+        fig.update_xaxes(fixedrange=True)         
+        fig.update_yaxes(fixedrange=True)         
+        
         st.plotly_chart(fig)
         ###################################################################################################
         DF = df[(df['Area'] == area_seleccionada)
@@ -251,6 +259,10 @@ with tab4:
             height=700
         )
 
+        # Bloquear cambios de escala en ambos ejes
+        fig.update_xaxes(fixedrange=True)         
+        fig.update_yaxes(fixedrange=True)         
+        
         st.plotly_chart(fig)
         ###################################################################################################
         fig = px.bar(
@@ -266,6 +278,10 @@ with tab4:
 
         fig.update_layout(height=800)
 
+        # Bloquear cambios de escala en ambos ejes
+        fig.update_xaxes(fixedrange=True)         
+        fig.update_yaxes(fixedrange=True)         
+        
         #st.plotly_chart(fig)
         ######################################################################################################
         
@@ -349,6 +365,10 @@ with tab4:
         fig.layout.updatemenus[0].buttons[0].args[1]['frame']['duration'] = int(duracion_frame)  # 1s entre frames
         fig.layout.updatemenus[0].buttons[0].args[1]['transition']['duration'] = int(duracion_transicion)
 
+        # Bloquear cambios de escala en ambos ejes
+        fig.update_xaxes(fixedrange=True)         
+        fig.update_yaxes(fixedrange=True)         
+
         st.plotly_chart(fig)
 
         fig2 = px.line(
@@ -358,6 +378,10 @@ with tab4:
         markers=True,
         title=f'Evolución del Puntaje de {colegio_destacado}'
         )
+        # Bloquear cambios de escala en ambos ejes
+        fig2.update_xaxes(fixedrange=True)         
+        fig2.update_yaxes(fixedrange=True)         
+
         st.plotly_chart(fig2)
         ##############################################################################################
         

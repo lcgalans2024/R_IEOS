@@ -65,6 +65,10 @@ def niveles_desempeño_areas(df,año=None):
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
             )
         )
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
+    
     # Mostrar el gráfico
     st.plotly_chart(fig)
 
@@ -96,6 +100,10 @@ def comparativo_areas(df, variable=None):
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
             )
         )
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
+    
     # Mostrar el gráfico
     st.plotly_chart(fig)
 
@@ -128,6 +136,10 @@ def comparativo_areas_grupo(df, año=None):
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
             )
         )
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)
+    fig.update_yaxes(fixedrange=True)
+    
     # Mostrar el gráfico
     st.plotly_chart(fig)
 

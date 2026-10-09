@@ -52,6 +52,10 @@ def puntaje_por_area(df,filtros):
         title=f"Comportamiento en las areas por cada grupo"
         #,xaxis_tickangle=-45,
     )
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
+    
     # Mostrar el gráfico
     st.plotly_chart(fig)
 
@@ -88,6 +92,10 @@ def puntaje_por_area(df,filtros):
             #,xaxis_tickangle=-45,
         )
 
+        # Bloquear cambios de escala en ambos ejes
+        fig.update_xaxes(fixedrange=True)         
+        fig.update_yaxes(fixedrange=True)         
+        
         # Mostrar el gráfico
         st.plotly_chart(fig)
 
@@ -158,6 +166,10 @@ def puntaje_por_area(df,filtros):
                 title=f"Distribución de puntajes en {area_seleccionada} por grupo para cada prueba en el año {filtros["anio"]}",
             )
 
+            # Bloquear cambios de escala en ambos ejes
+            fig.update_xaxes(fixedrange=True)         
+            fig.update_yaxes(fixedrange=True)         
+            
             # Mostrar el gráfico
             st.plotly_chart(fig)
         
@@ -208,7 +220,11 @@ def puntaje_por_area(df,filtros):
                 yaxis_title="Porcentaje",
                 title=f"Distribución porcentual niveles de desempeño en {area_seleccionada} por grupo en la prueba {simulacro_seleccionado} del año {filtros["anio"]}",
             )
-            # Mostrar el gráfico
+
+            # Bloquear cambios de escala en ambos ejes
+            fig.update_xaxes(fixedrange=True)         # Mostrar el gráfico
+            fig.update_yaxes(fixedrange=True)         
+            
             st.plotly_chart(fig)
         except:
             st.warning(f"⚠️ Para el área {area_seleccionada} no se tienen niveles de desempeño definidos.")

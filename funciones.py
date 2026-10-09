@@ -190,6 +190,9 @@ def BartChartRace(df):
     fig.update_yaxes(categoryorder='total ascending')
     fig.layout.updatemenus[0].buttons[0].args[1]['frame']['duration'] = int(1500)  # 1s entre frames
     fig.layout.updatemenus[0].buttons[0].args[1]['transition']['duration'] = int(1200)
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
     st.plotly_chart(fig)
     fig2 = px.line(
     DF[DF['Colegio'] == colegio_destacado],
@@ -198,6 +201,9 @@ def BartChartRace(df):
     markers=True,
     title=f'Evolución del Puntaje de {colegio_destacado}'
     )
+    # Bloquear cambios de escala en ambos ejes
+    fig2.update_xaxes(fixedrange=True)         
+    fig2.update_yaxes(fixedrange=True)         
     st.plotly_chart(fig2)
 
     #return st.dataframe(DF)

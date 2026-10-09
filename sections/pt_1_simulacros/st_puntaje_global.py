@@ -40,7 +40,12 @@ def puntaje_global(df, filtros):
               xaxis_title="Grupo",
               yaxis_title="Puntaje global",
               title=f"Promedio de puntajes globales por prueba para el grado {filtros['grado']} en el año {filtros['anio']}",
+              dragmode=False
           )
+
+          # Bloquear cambios de escala en ambos ejes
+          fig.update_xaxes(fixedrange=True)
+          fig.update_yaxes(fixedrange=True)
 
           #Mostrar el gráfico
           st.plotly_chart(fig)
@@ -77,6 +82,10 @@ def puntaje_global(df, filtros):
               title="Distribución de puntajes globales por grupo en las diferentes pruebas",
           )
 
+          # Bloquear cambios de escala en ambos ejes
+          fig.update_xaxes(fixedrange=True)         
+          fig.update_yaxes(fixedrange=True)         
+          
           #Mostrar el gráfico
           st.plotly_chart(fig)
 

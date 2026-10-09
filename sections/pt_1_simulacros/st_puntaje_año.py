@@ -47,6 +47,9 @@ def puntaje_por_año():
         yaxis_title="Puntaje global",
         title=f"Comparativo puntajes por prueba para cada año en el grado {st.session_state["grado_seleccionado"]}"
     )
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
     # Mostrar el gráfico
     st.plotly_chart(fig)
     
@@ -70,6 +73,9 @@ def puntaje_por_año():
         yaxis_title="Puntaje promedio",
         title=f"Comparativo puntaje global décimo 2024 vs once 2025"
     )
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
     # Mostrar el gráfico
     st.plotly_chart(fig)
 
@@ -87,7 +93,11 @@ def puntaje_por_año():
         yaxis_title="Puntaje promedio",
         title=f"Comparativo décimo 2024 vs once 2025 por área"
     )
-    # Mostrar el gráfico
+
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         # Mostrar el gráfico
+    fig.update_yaxes(fixedrange=True)         
+    
     st.plotly_chart(fig)
 
     col1, col2 = st.columns(2)

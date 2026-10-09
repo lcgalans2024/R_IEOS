@@ -78,4 +78,6 @@ def puntaje_por_grupo(df, filtros, variable=None):
                 height=400,
                 title=f"Promedio puntaje global por grupo año {año_seleccionado}"
             )
+        
+        
         st.altair_chart(final_chart, use_container_width=True)
