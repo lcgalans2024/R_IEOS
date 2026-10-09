@@ -45,7 +45,8 @@ def puntaje_por_año():
     fig.update_layout(
         xaxis_title="Área",
         yaxis_title="Puntaje global",
-        title=f"Comparativo puntajes por prueba para cada año en el grado {st.session_state["grado_seleccionado"]}"
+        title=f"Comparativo puntajes por prueba para cada año en el grado {st.session_state["grado_seleccionado"]}",
+        dragmode=False
     )
     # Bloquear cambios de escala en ambos ejes
     fig.update_xaxes(fixedrange=True)         
@@ -71,7 +72,8 @@ def puntaje_por_año():
     fig.update_layout(
         xaxis_title="Área",
         yaxis_title="Puntaje promedio",
-        title=f"Comparativo puntaje global décimo 2024 vs once 2025"
+        title=f"Comparativo puntaje global décimo 2024 vs once 2025",
+        dragmode=False
     )
     # Bloquear cambios de escala en ambos ejes
     fig.update_xaxes(fixedrange=True)         
@@ -91,7 +93,8 @@ def puntaje_por_año():
     fig.update_layout(
         xaxis_title="Área",
         yaxis_title="Puntaje promedio",
-        title=f"Comparativo décimo 2024 vs once 2025 por área"
+        title=f"Comparativo décimo 2024 vs once 2025 por área",
+        dragmode=False
     )
 
     # Bloquear cambios de escala en ambos ejes

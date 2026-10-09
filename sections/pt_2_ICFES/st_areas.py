@@ -63,7 +63,8 @@ def niveles_desempeño_areas(df,año=None):
             bargap=0.3,  # Reduce la separación entre las barras (ajústalo según tu preferencia)
             xaxis=dict(
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
-            )
+            ),
+            dragmode=False
         )
     # Bloquear cambios de escala en ambos ejes
     fig.update_xaxes(fixedrange=True)         
@@ -98,7 +99,8 @@ def comparativo_areas(df, variable=None):
             bargap=0.3,  # Reduce la separación entre las barras (ajústalo según tu preferencia)
             xaxis=dict(
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
-            )
+            ),
+            dragmode=False
         )
     # Bloquear cambios de escala en ambos ejes
     fig.update_xaxes(fixedrange=True)         
@@ -134,7 +136,8 @@ def comparativo_areas_grupo(df, año=None):
             bargap=0.3,  # Reduce la separación entre las barras (ajústalo según tu preferencia)
             xaxis=dict(
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
-            )
+            ),
+            dragmode=False
         )
     # Bloquear cambios de escala en ambos ejes
     fig.update_xaxes(fixedrange=True)

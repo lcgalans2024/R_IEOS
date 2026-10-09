@@ -55,7 +55,8 @@ def mostrar_puntaje_areas(df,año=None):
             bargap=0.3,  # Reduce la separación entre las barras (ajústalo según tu preferencia)
             xaxis=dict(
                 tickangle=-45  # Aquí rotas las etiquetas del eje X
-            )
+            ),
+            dragmode=False
         )
     # Bloquear cambios de escala en ambos ejes
     fig.update_xaxes(fixedrange=True)         

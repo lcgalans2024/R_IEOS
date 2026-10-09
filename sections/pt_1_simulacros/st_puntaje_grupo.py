@@ -42,7 +42,8 @@ def puntaje_por_grupo(df,filtros):
     fig.update_layout(
           xaxis_title="Áreas",
           yaxis_title="Promedios",
-          title=f"Distribución de puntajes por área del grupo {grupo_seleccionado} en el año {filtros["anio"]}"
+          title=f"Distribución de puntajes por área del grupo {grupo_seleccionado} en el año {filtros["anio"]}",
+          dragmode=False
           #xaxis_tickangle=-45,
     )
 

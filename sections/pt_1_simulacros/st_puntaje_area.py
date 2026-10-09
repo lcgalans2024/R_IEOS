@@ -49,7 +49,8 @@ def puntaje_por_area(df,filtros):
     fig.update_layout(
         xaxis_title="Áreas",
         yaxis_title="Puntaje promedio",
-        title=f"Comportamiento en las areas por cada grupo"
+        title=f"Comportamiento en las areas por cada grupo",
+        dragmode=False
         #,xaxis_tickangle=-45,
     )
     # Bloquear cambios de escala en ambos ejes
@@ -89,6 +90,7 @@ def puntaje_por_area(df,filtros):
             xaxis_title="Áreas",
             yaxis_title="Puntaje promedio",
             title=f"Distribución de puntajes del grado {st.session_state['grado_seleccionado']} por área para cada prueba en el año {filtros["anio"]}",
+            dragmode=False
             #,xaxis_tickangle=-45,
         )
 
@@ -164,6 +166,7 @@ def puntaje_por_area(df,filtros):
                 xaxis_title="Grupo",
                 yaxis_title="Puntaje promedio",
                 title=f"Distribución de puntajes en {area_seleccionada} por grupo para cada prueba en el año {filtros["anio"]}",
+                dragmode=False
             )
 
             # Bloquear cambios de escala en ambos ejes
@@ -219,6 +222,7 @@ def puntaje_por_area(df,filtros):
                 xaxis_title="Grupo",
                 yaxis_title="Porcentaje",
                 title=f"Distribución porcentual niveles de desempeño en {area_seleccionada} por grupo en la prueba {simulacro_seleccionado} del año {filtros["anio"]}",
+                dragmode=False
             )
 
             # Bloquear cambios de escala en ambos ejes
