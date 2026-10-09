@@ -46,7 +46,9 @@ def puntaje_por_grupo(df,filtros):
           dragmode=False
           #xaxis_tickangle=-45,
     )
-
+    # Bloquear cambios de escala en ambos ejes
+    fig.update_xaxes(fixedrange=True)         
+    fig.update_yaxes(fixedrange=True)         
     # Mostrar el gráfico
     #fig.show()
     st.plotly_chart(fig)
